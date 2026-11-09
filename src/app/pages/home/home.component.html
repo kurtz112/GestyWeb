@@ -1,0 +1,114 @@
+<div class="gesty-container home">
+
+  <header class="benvenuto">
+    <h2>{{ saluto }}{{ nome ? ', ' + nome : '' }}</h2>
+    <span class="data-oggi">{{ oggi | date:'EEEE d MMMM y' }}</span>
+  </header>
+
+  <div class="riquadri">
+
+    <!-- ── Prossimi impegni ──────────────────────────────────────────────── -->
+    <section class="card-gesty riquadro largo">
+      <div class="riquadro-testata">
+        <i class="dx-icon-event icon-leaf"></i>
+        <h3>Prossimi impegni</h3>
+        <a routerLink="/agenda" class="vai">Agenda</a>
+      </div>
+      @if (impegni().caricamento) {
+        <p class="vuoto">Caricamento…</p>
+      } @else if (impegni().errore) {
+        <p class="vuoto">Agenda non disponibile.</p>
+      } @else if (!impegni().dati?.length) {
+        <p class="vuoto">Nessun impegno nei prossimi 14 giorni.</p>
+      } @else {
+        <ul class="elenco">
+          @for (impegno of impegni().dati; track $index) {
+            <li>
+              <span class="quando">
+                {{ impegno.inizio | date:'EEE d MMM' }}
+                <b>{{ impegno.inizio | date:'HH:mm' }}@if (impegno.fine) {–{{ impegno.fine | date:'HH:mm' }}}</b>
+              </span>
+              <span class="cosa">{{ impegno.titolo }}</span>
+            </li>
+          }
+        </ul>
+      }
+    </section>
+
+    <!-- ── Ore del mese ───────────────────────────────────────────────────── -->
+    <a class="card-gesty riquadro numero" routerLink="/presenze">
+      <span class="etichetta">Ore di presenza di {{ oggi | date:'MMMM' }}</span>
+      <span class="valore">
+        @if (oreMese().caricamento) { … }
+        @else if (oreMese().errore) { — }
+        @else { {{ oreMese().dati | number:'1.0-2' }} }
+      </span>
+    </a>
+
+    <!-- ── Saldo ore di recupero ──────────────────────────────────────────── -->
+    <a class="card-gesty riquadro numero" routerLink="/ore-recupero">
+      <span class="etichetta">Saldo ore di recupero</span>
+      <span class="valore">
+        @if (saldoRecupero().caricamento) { … }
+        @else if (saldoRecupero().errore) { — }
+        @else { {{ saldoRecupero().dati!.residuo | number:'1.0-2' }} }
+      </span>
+      @if (saldoRecupero().dati?.periodo) {
+        <span class="nota">a fine {{ saldoRecupero().dati!.periodo }}</span>
+      }
+    </a>
+
+    <!-- ── Notifiche ──────────────────────────────────────────────────────── -->
+    <a class="card-gesty riquadro numero" routerLink="/notifiche" [class.evidenza]="nonLette.conteggio() > 0">
+      <span class="etichetta">Notifiche da leggere</span>
+      <span class="valore">{{ nonLette.conteggio() }}</span>
+    </a>
+
+    <!-- ── Autorizzazioni di pagamento ────────────────────────────────────── -->
+    <a class="card-gesty riquadro numero" routerLink="/autorizzazioni">
+      <span class="etichetta">Autorizzazioni di pagamento in attesa</span>
+      <span class="valore">
+        @if (autorizzazioni().caricamento) { … }
+        @else if (autorizzazioni().errore) { — }
+        @else { {{ autorizzazioni().dati!.daValidare }} }
+      </span>
+      @if (autorizzazioni().dati?.ultimaValidata) {
+        <span class="nota">ultima validata il {{ autorizzazioni().dati!.ultimaValidata | date:'d MMM y' }}</span>
+      }
+    </a>
+
+    <!-- ── Incarichi attivi ───────────────────────────────────────────────── -->
+    <section class="card-gesty riquadro largo">
+      <div class="riquadro-testata">
+        <i class="dx-icon-contentlayout icon-leaf"></i>
+        <h3>Incarichi in corso
+          @if (incarichi().dati) { <small>({{ incarichi().dati!.attivi }})</small> }
+        </h3>
+        <a routerLink="/incarichi" class="vai">Tutti</a>
+      </div>
+      @if (incarichi().caricamento) {
+        <p class="vuoto">Caricamento…</p>
+      } @else if (incarichi().errore) {
+        <p class="vuoto">Incarichi non disponibili.</p>
+      } @else if (!incarichi().dati?.elenco?.length) {
+        <p class="vuoto">Nessun incarico in corso.</p>
+      } @else {
+        <ul class="elenco">
+          @for (incarico of incarichi().dati!.elenco; track $index) {
+            <li>
+              <span class="cosa">
+                {{ incarico.descrizione }}
+                @if (incarico.materia) { <small>{{ incarico.materia }}</small> }
+              </span>
+              <span class="quando">
+                <b>{{ incarico.oreResidue | number:'1.0-2' }} ore residue</b>
+                @if (incarico.fine) { fino al {{ incarico.fine | date:'d MMM y' }} }
+              </span>
+            </li>
+          }
+        </ul>
+      }
+    </section>
+
+  </div>
+</div>

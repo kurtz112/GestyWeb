@@ -1,0 +1,130 @@
+// Centro notifiche — compatibile con il tema Gesty (chiaro/scuro)
+
+.gesty-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.testata {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+
+  h3 {
+    margin: 0;
+    color: var(--gesty-text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .contatore {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #fff;
+    background: #f39c12;
+    border-radius: 10px;
+    padding: 2px 8px;
+  }
+}
+
+.comandi {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.interruttore {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--gesty-text-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.vuoto {
+  color: var(--gesty-text-muted);
+  margin: 0;
+}
+
+.elenco {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    border-bottom: 1px solid var(--gesty-border);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+.riga {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 4px;
+  background: none;
+  border: none;
+  color: var(--gesty-text);
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+
+  &:hover {
+    background: var(--gesty-bg);
+  }
+}
+
+.punto {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--gesty-border);
+}
+
+.da-leggere .punto {
+  background: var(--gesty-leaf);
+  border-color: var(--gesty-leaf);
+}
+
+.corpo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.oggetto {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.da-leggere .oggetto {
+  font-weight: 700;
+}
+
+.dettaglio {
+  font-size: 0.8rem;
+  color: var(--gesty-text-muted);
+}
+
+.messaggio {
+  padding: 4px 4px 16px 26px;
+  white-space: pre-wrap;
+  color: var(--gesty-text);
+  line-height: 1.5;
+}

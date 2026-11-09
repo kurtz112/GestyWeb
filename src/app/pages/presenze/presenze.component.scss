@@ -1,0 +1,143 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// presenze.component.scss
+// Stili per il componente Presenze — compatibili con il tema Gesty (dark/light)
+// ─────────────────────────────────────────────────────────────────────────────
+
+.gesty-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// CARD FILTRI
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.filter-section {
+  background: var(--gesty-card);
+  color: var(--gesty-text);
+  border-top: 4px solid var(--gesty-leaf);
+  border-bottom: 1px solid var(--gesty-border);
+  border-left: 1px solid var(--gesty-border);
+  border-right: 1px solid var(--gesty-border);
+}
+
+.filter-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-item {
+  flex: 1;
+  min-width: 200px;
+
+  label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--gesty-text-muted);
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    display: block;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// STATS RIBBON
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.stats-ribbon {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  flex: 1;
+  min-width: 150px;
+  background: var(--gesty-card);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: var(--gesty-shadow);
+  border: 1px solid var(--gesty-border);
+  text-align: center;
+
+  .stat-label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--gesty-text-muted);
+    margin-bottom: 5px;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--gesty-primary);
+  }
+
+  // Variante warning (ferie/permessi)
+  &.warning .stat-value {
+    color: #f39c12;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SEZIONE GRIGLIA
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.grid-section {
+  background: var(--gesty-card);
+  color: var(--gesty-text);
+  border: 1px solid var(--gesty-border);
+}
+
+.grid-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-bottom: 1px solid var(--gesty-border);
+  background: var(--gesty-bg);
+}
+
+.title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--gesty-text);
+  }
+}
+
+.icon-leaf {
+  color: var(--gesty-leaf);
+  font-size: 1.3rem;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// RESPONSIVE
+// ═══════════════════════════════════════════════════════════════════════════════
+
+@media (max-width: 768px) {
+  .stats-ribbon {
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 15px;
+
+    .stat-value {
+      font-size: 1.2rem;
+    }
+  }
+
+  .grid-header {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}

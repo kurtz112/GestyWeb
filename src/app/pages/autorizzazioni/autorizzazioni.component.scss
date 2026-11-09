@@ -1,0 +1,139 @@
+    .gesty-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Card Filtri - ORA REATTIVA */
+    .filter-card {
+      background: var(--gesty-card);
+      /* Usiamo la variabile */
+      color: var(--gesty-text);
+      padding: 25px;
+      border-radius: 16px;
+      border-left: 5px solid var(--gesty-leaf);
+      border-top: 1px solid var(--gesty-border);
+      border-right: 1px solid var(--gesty-border);
+      border-bottom: 1px solid var(--gesty-border);
+    }
+
+    .filter-grid {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .filter-item {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .filter-item label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--gesty-text-muted);
+      /* Variabile per il grigio */
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    /* Card Principale - ORA REATTIVA */
+    .main-card {
+      background: var(--gesty-card);
+      color: var(--gesty-text);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--gesty-border);
+    }
+
+    .card-header {
+      padding: 20px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--gesty-bg);
+      /* Sfondo leggermente diverso per l'header */
+      border-bottom: 1px solid var(--gesty-border);
+    }
+
+    .header-left h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: var(--gesty-primary);
+      font-weight: 700;
+    }
+
+    .total-label {
+      font-size: 0.9rem;
+      color: var(--gesty-text-muted);
+    }
+
+    .total-label strong {
+      color: var(--gesty-primary);
+      font-size: 1.1rem;
+    }
+
+    /* Badge Stati (Colori trasparenti per adattarsi a chiaro/scuro) */
+    .badge-status {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .badge-status.autorizzato {
+      background: rgba(25, 118, 210, 0.2);
+      color: #4dabf5;
+    }
+
+    .badge-status.pagato {
+      background: rgba(46, 125, 50, 0.2);
+      color: #81c784;
+    }
+
+    .badge-status.in-elaborazione {
+      background: rgba(239, 108, 0, 0.2);
+      color: #ffb74d;
+    }
+
+    @media (max-width: 768px) {
+      .filter-grid {
+        flex-direction: column;
+      }
+    }
+
+    /* Riepilogo dell'anno, calcolato dai dati */
+    .stats-ribbon {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .stat-card {
+      flex: 1;
+      min-width: 180px;
+      background: var(--gesty-card);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: var(--gesty-shadow);
+      border: 1px solid var(--gesty-border);
+      text-align: center;
+    }
+
+    .stat-label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--gesty-text-muted);
+      margin-bottom: 5px;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--gesty-primary);
+    }
+
+    .stat-card.attesa .stat-value {
+      color: #f39c12;
+    }

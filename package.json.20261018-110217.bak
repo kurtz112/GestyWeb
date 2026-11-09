@@ -1,0 +1,37 @@
+{
+  "name": "gestyweb",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "dependencies": {
+    "@angular/animations": "~21.1.0",
+    "@angular/common": "~21.1.0",
+    "@angular/compiler": "~21.1.0",
+    "@angular/core": "~21.1.0",
+    "@angular/forms": "~21.1.0",
+    "@angular/platform-browser": "~21.1.0",
+    "@angular/platform-browser-dynamic": "~21.1.0",
+    "@angular/router": "~21.1.0",
+    "devextreme": "25.2.4",
+    "devextreme-angular": "25.2.4",
+    "exceljs": "^4.4.0",
+    "file-saver": "^2.0.5",
+    "jspdf": "^4.1.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.6.0"
+  },
+  "devDependencies": {
+    "@angular/build": "~21.1.0",
+    "@angular/cli": "~21.1.0",
+    "@angular/compiler-cli": "~21.1.0",
+    "@types/file-saver": "^2.0.7",
+    "typescript": "~5.9.0"
+  }
+}

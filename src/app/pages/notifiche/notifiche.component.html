@@ -1,0 +1,52 @@
+<div class="gesty-container">
+  <div class="card-gesty shadow-sm">
+    <div class="testata">
+      <h3><i class="dx-icon-bell icon-leaf"></i> Centro Notifiche
+        @if (daLeggere() > 0) { <span class="contatore">{{ daLeggere() }} da leggere</span> }
+      </h3>
+      <div class="comandi">
+        <label class="interruttore">
+          <dx-switch [value]="soloDaLeggere()" (onValueChanged)="soloDaLeggere.set($event.value)"></dx-switch>
+          Solo da leggere
+        </label>
+        <dx-button
+          text="Segna tutte come lette"
+          icon="check"
+          stylingMode="outlined"
+          [disabled]="daLeggere() === 0"
+          (onClick)="segnaTutte()">
+        </dx-button>
+      </div>
+    </div>
+
+    @if (caricamento()) {
+      <p class="vuoto">Caricamento…</p>
+    } @else if (errore()) {
+      <p class="vuoto">Notifiche non disponibili.</p>
+    } @else if (visibili().length === 0) {
+      <p class="vuoto">{{ soloDaLeggere() ? 'Nessuna notifica da leggere.' : 'Nessuna notifica.' }}</p>
+    } @else {
+      <ul class="elenco">
+        @for (notifica of visibili(); track notifica.id) {
+          <li [class.da-leggere]="!notifica.letta" [class.aperta]="aperta() === notifica.id">
+            <button type="button" class="riga" (click)="apri(notifica)">
+              <span class="punto" [attr.aria-label]="notifica.letta ? 'Letta' : 'Da leggere'"></span>
+              <span class="corpo">
+                <span class="oggetto">{{ notifica.oggetto }}</span>
+                <span class="dettaglio">
+                  @if (notifica.mittente) { {{ notifica.mittente }} · }
+                  @if (notifica.tipo) { {{ notifica.tipo }} · }
+                  {{ notifica.data | date:'d MMM y, HH:mm' }}
+                </span>
+              </span>
+              <i class="dx-icon" [class.dx-icon-chevrondown]="aperta() !== notifica.id" [class.dx-icon-chevronup]="aperta() === notifica.id"></i>
+            </button>
+            @if (aperta() === notifica.id) {
+              <div class="messaggio">{{ notifica.messaggio || 'Nessun testo.' }}</div>
+            }
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</div>

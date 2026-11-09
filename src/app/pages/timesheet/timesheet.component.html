@@ -1,0 +1,84 @@
+<div class="gesty-container">
+
+  <!-- ─── 1. CARD INTESTAZIONE / KPI ─────────────────────────────────── -->
+  <div class="kpi-row">
+    <button type="button" class="kpi-card kpi-cliccabile shadow-sm" [class.kpi-attivo]="riquadroAttivo() === 'totali'"
+      title="Mostra nella griglia tutti i rilevamenti" (click)="filtra('totali')">
+      <span class="kpi-label">Ore Totali</span>
+      <span class="kpi-value">{{ oreTotali() }}</span>
+      <span class="kpi-sub">tutti i rilevamenti</span>
+    </button>
+    <button type="button" class="kpi-card kpi-cliccabile shadow-sm" [class.kpi-attivo]="riquadroAttivo() === 'validate'"
+      title="Mostra nella griglia i rilevamenti validati" (click)="filtra('validate')">
+      <span class="kpi-label">Ore Validate</span>
+      <span class="kpi-value kpi-ok">{{ oreValidate() }}</span>
+      <span class="kpi-sub">su {{ oreTotali() }} inserite</span>
+    </button>
+    <button type="button" class="kpi-card kpi-cliccabile shadow-sm" [class.kpi-attivo]="riquadroAttivo() === 'davalidare'"
+      title="Mostra nella griglia i rilevamenti da validare" (click)="filtra('davalidare')">
+      <span class="kpi-label">Da Validare</span>
+      <span class="kpi-value kpi-warn">{{ oreDaValidare() }}</span>
+      <span class="kpi-sub">in attesa di validazione</span>
+    </button>
+  </div>
+
+  <!-- ─── 2. CARD INSERIMENTO ─────────────────────────────────────────── -->
+  <div class="master-section shadow-sm">
+    <div class="section-header">
+      <h3>
+        <i class="dx-icon-clock icon-leaf"></i>
+        Inserimento Ore
+      </h3>
+    </div>
+
+    <div class="form-body">
+      <div class="form-grid">
+
+        <div class="form-field">
+          <label class="field-label">Data</label>
+          <dx-date-box [(value)]="nuovoDato.data" displayFormat="dd/MM/yyyy" stylingMode="underlined" width="100%">
+          </dx-date-box>
+        </div>
+
+        <div class="form-field">
+          <label class="field-label">Ore</label>
+          <dx-number-box [(value)]="nuovoDato.ore" [min]="0.5" [max]="24" [step]="0.5" stylingMode="underlined"
+            width="100%">
+          </dx-number-box>
+        </div>
+
+        <div class="form-field form-field--wide">
+          <label class="field-label">Attività</label>
+          <dx-select-box [dataSource]="attivitaDisponibili" [(value)]="nuovoDato.attivita"
+            placeholder="Seleziona attività..." stylingMode="underlined" width="100%">
+          </dx-select-box>
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+        <dx-button text="Salva Ore" type="success" icon="check" stylingMode="contained" (onClick)="salva()">
+        </dx-button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 3. CARD RIEPILOGO MENSILE ──────────────────────────────────── -->
+  <div class="master-section shadow-sm">
+    <div class="section-header">
+      <h3>
+        <i class="dx-icon-detailslayout icon-leaf"></i>
+        Riepilogo Mensile
+      </h3>
+      <span class="header-badge">{{ meseCorrente }}</span>
+    </div>
+
+    <div class="grid-wrapper">
+     <zz-data-grid
+       #zzGrid
+       [dataset]="dataset"
+       [height]="460">
+     </zz-data-grid>
+    </div>
+  </div>
+</div>

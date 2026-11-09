@@ -1,0 +1,75 @@
+<div class="gesty-container">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- FILTRI SUPERIORI                                                       -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="card-gesty filter-section shadow-sm">
+    <div class="filter-row">
+      <div class="filter-item">
+        <label>Anno</label>
+        <dx-select-box
+          [items]="anni"
+          [(value)]="selectedAnno"
+          stylingMode="filled"
+          (onValueChanged)="onFilterChanged()">
+        </dx-select-box>
+      </div>
+      <div class="filter-item">
+        <label>Mese</label>
+        <dx-select-box
+          [dataSource]="mesi"
+          displayExpr="nome"
+          valueExpr="id"
+          [(value)]="selectedMese"
+          stylingMode="filled"
+          (onValueChanged)="onFilterChanged()">
+        </dx-select-box>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- RIEPILOGO DEL MESE                                                     -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="stats-ribbon">
+    <div class="stat-card">
+      <span class="stat-label">Ore di presenza</span>
+      <span class="stat-value">{{ riepilogo() ? (riepilogo()!.oreTotali | number:'1.0-2') : '—' }}</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Giorni di presenza</span>
+      <span class="stat-value">{{ riepilogo() ? riepilogo()!.giorniPresenza : '—' }}</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Media ore al giorno</span>
+      <span class="stat-value">{{ riepilogo() ? (riepilogo()!.mediaOreGiorno | number:'1.0-2') : '—' }}</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- GRIGLIA PRESENZE (zz-data-grid metadata-driven)                        -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="card-gesty grid-section shadow-sm">
+    <div class="grid-header">
+      <div class="title-group">
+        <i class="dx-icon-clock icon-leaf"></i>
+        <h3>Registro presenze di {{ titoloMese }}</h3>
+      </div>
+      <dx-button
+        icon="exportxlsx"
+        text="Esporta Foglio"
+        stylingMode="text"
+        (onClick)="exportExcel()">
+      </dx-button>
+    </div>
+
+    <zz-data-grid
+      #gridPresenze
+      [dataset]="dataset"
+      [height]="500"
+      [enableGridLookups]="true"
+      (metadataLoaded)="onMetadataLoaded()">
+    </zz-data-grid>
+  </div>
+
+</div>

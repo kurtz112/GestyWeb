@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "module": "ESNext",
+  "moduleResolution": "bundler",
+  "compilerOptions": {
+    "outDir": "./out-tsc/app",
+    "types": []
+  },
+  "files": [
+    "src/main.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts",
+    "src/**/*.ts",
+    "zng/**/*.ts"
+  ]
+}

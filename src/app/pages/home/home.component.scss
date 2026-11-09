@@ -1,0 +1,160 @@
+// Pagina iniziale del collaboratore — compatibile con il tema Gesty (chiaro/scuro)
+
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.benvenuto {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  h2 {
+    margin: 0;
+    color: var(--gesty-text);
+    font-weight: 800;
+  }
+
+  .data-oggi {
+    color: var(--gesty-text-muted);
+    text-transform: capitalize;
+  }
+}
+
+.riquadri {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.riquadro {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--gesty-text);
+  text-decoration: none;
+  min-width: 0;
+
+  &.largo {
+    grid-column: span 2;
+  }
+
+  // a telefono un riquadro largo occuperebbe due colonne che non ci sono
+  @media (max-width: 560px) {
+    &.largo {
+      grid-column: span 1;
+    }
+  }
+}
+
+a.riquadro {
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--gesty-shadow);
+  }
+}
+
+.riquadro-testata {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+
+  h3 {
+    margin: 0;
+    flex: 1;
+    font-size: 1.05rem;
+
+    small {
+      color: var(--gesty-text-muted);
+      font-weight: 400;
+    }
+  }
+
+  .vai {
+    color: var(--gesty-leaf);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.numero {
+  justify-content: center;
+  text-align: center;
+
+  .etichetta {
+    font-size: 0.8rem;
+    color: var(--gesty-text-muted);
+  }
+
+  .valore {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--gesty-primary);
+  }
+
+  .nota {
+    font-size: 0.75rem;
+    color: var(--gesty-text-muted);
+  }
+
+  &.evidenza .valore {
+    color: #f39c12;
+  }
+}
+
+.elenco {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gesty-border);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .quando {
+    color: var(--gesty-text-muted);
+    white-space: nowrap;
+    font-size: 0.85rem;
+
+    b {
+      color: var(--gesty-text);
+      margin-left: 4px;
+    }
+  }
+
+  .cosa {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    small {
+      display: block;
+      color: var(--gesty-text-muted);
+    }
+  }
+}
+
+.vuoto {
+  color: var(--gesty-text-muted);
+  margin: 0;
+}

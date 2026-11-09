@@ -1,0 +1,54 @@
+<div class="gesty-container">
+
+  <!-- SEZIONE FILTRI -->
+  <div class="filter-card shadow-sm">
+    <div class="filter-grid">
+      <div class="filter-item">
+        <label>Anno di autorizzazione</label>
+        <dx-select-box
+          [items]="anni"
+          [(value)]="annoSelezionato"
+          stylingMode="filled"
+          (onValueChanged)="onAnnoCambiato()">
+        </dx-select-box>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIEPILOGO DELL'ANNO -->
+  <div class="stats-ribbon">
+    <div class="stat-card">
+      <span class="stat-label">Compensi validati</span>
+      <span class="stat-value">{{ riepilogo() ? (riepilogo()!.compensiValidati | currency:'EUR':'symbol':'1.2-2':'it') : '—' }}</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Ore validate</span>
+      <span class="stat-value">{{ riepilogo() ? (riepilogo()!.oreValidate | number:'1.0-2':'it') : '—' }}</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Autorizzazioni validate</span>
+      <span class="stat-value">{{ riepilogo() ? riepilogo()!.validate : '—' }}</span>
+    </div>
+    <div class="stat-card attesa">
+      <span class="stat-label">In attesa di validazione</span>
+      <span class="stat-value">{{ riepilogo() ? riepilogo()!.inAttesa : '—' }}</span>
+    </div>
+  </div>
+
+  <!-- GRIGLIA AUTORIZZAZIONI -->
+  <div class="main-card shadow-sm">
+    <div class="card-header">
+      <div class="header-left">
+        <i class="dx-icon-money icon-green"></i>
+        <h3>Autorizzazioni di Pagamento {{ annoSelezionato }}</h3>
+      </div>
+    </div>
+
+    <zz-data-grid
+      #zzGrid
+      [dataset]="dataset"
+      [height]="460"
+      (metadataLoaded)="onMetadataLoaded()">
+    </zz-data-grid>
+  </div>
+</div>

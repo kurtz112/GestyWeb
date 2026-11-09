@@ -1,0 +1,202 @@
+<div class="demo-page">
+
+  <!-- ═══ Header ═══ -->
+  <header class="demo-header">
+    <h2>Metadata Demo</h2>
+    <span class="demo-subtitle">Componenti ZzDataGrid e ZzForm guidati dai metadati</span>
+  </header>
+
+  <!-- ═══ Dataset Selector ═══ -->
+  <div class="dataset-bar">
+    <div class="dataset-input">
+      <label>Dataset</label>
+      <dx-text-box
+        [(value)]="datasetId"
+        placeholder="es: DM.STUDENTI, DM.CORSI, DM.DOCENTI..."
+        [showClearButton]="true"
+        (onEnterKey)="onLoad()">
+      </dx-text-box>
+    </div>
+
+    @if (recentDatasets.length) {
+      <div class="dataset-recent">
+        <label>Recenti</label>
+        <dx-select-box
+          [dataSource]="recentDatasets"
+          [value]="datasetId"
+          (onValueChanged)="onSelectRecent($event)"
+          placeholder="Seleziona..."
+          [showClearButton]="true">
+        </dx-select-box>
+      </div>
+    }
+
+    <div class="dataset-actions">
+      <dx-button
+        text="Carica"
+        type="default"
+        icon="download"
+        (onClick)="onLoad()">
+      </dx-button>
+      <dx-button
+        text="Ricarica (no cache)"
+        icon="refresh"
+        stylingMode="outlined"
+        [disabled]="!activeDataset()"
+        (onClick)="onReload()">
+      </dx-button>
+      <dx-button
+        text="JSON Metadati"
+        icon="description"
+        stylingMode="outlined"
+        [disabled]="!currentMeta()"
+        (onClick)="showJson = true">
+      </dx-button>
+    </div>
+  </div>
+
+  @if (statusMessage()) {
+    <div class="status-bar" [class.error]="statusIsError()">
+      {{ statusMessage() }}
+    </div>
+  }
+
+  <!-- ═══ Main Content ═══ -->
+  @if (activeDataset()) {
+    <dx-tab-panel [animationEnabled]="true" [swipeEnabled]="false">
+
+      <!-- TAB 1: DataGrid -->
+      <dxi-item [title]="'Grid: ' + (currentMeta()?.caption || activeDataset())" icon="grid">
+        <div class="tab-content">
+          <zz-data-grid
+            #zzGrid
+            [dataset]="activeDataset()!"
+            [showDevTools]="true"
+            [height]="520"
+            (metadataLoaded)="onMetadataLoaded($event)"
+            (onRowClick)="onGridRowClick($event)">
+          </zz-data-grid>
+        </div>
+      </dxi-item>
+
+      <!-- TAB 2: Form (record selezionato) -->
+      <dxi-item [title]="'Form: ' + (currentMeta()?.caption || activeDataset())" icon="edit">
+        <div class="tab-content">
+          @if (!formData || !hasFormData()) {
+            <div class="form-hint">
+              Seleziona una riga nella tab Grid per editarla qui,
+              oppure inserisci un nuovo record.
+            </div>
+            <dx-button
+              text="Nuovo Record"
+              type="default"
+              icon="add"
+              (onClick)="onNewRecord()">
+            </dx-button>
+          }
+
+          @if (hasFormData()) {
+            <div class="form-toolbar">
+              <dx-button text="Nuovo" icon="add" stylingMode="outlined" (onClick)="onNewRecord()"></dx-button>
+              <dx-switch
+                [(value)]="formReadOnly"
+                switchedOnText="Sola Lettura"
+                switchedOffText="Modifica">
+              </dx-switch>
+            </div>
+          }
+
+          <zz-form
+            #zzForm
+            [showDevTools]="true"
+            [dataset]="activeDataset()!"
+            [(formData)]="formData"
+            [readOnly]="formReadOnly"
+            (fieldDataChanged)="onFormFieldChanged($event)">
+          </zz-form>
+        </div>
+      </dxi-item>
+
+      <!-- TAB 3: Metadata Explorer -->
+      <dxi-item title="Metadata Explorer" icon="info">
+        <div class="tab-content">
+          @if (currentMeta()) {
+            <div class="meta-summary">
+              <div class="meta-card">
+                <h4>Dataset</h4>
+                <p><strong>{{ currentMeta()!.datasetId }}</strong></p>
+                <p>PK: {{ currentMeta()!.primaryKey }}</p>
+                <p>Caption: {{ currentMeta()!.caption }}</p>
+                <p>Campi: {{ currentMeta()!.fields.length }}</p>
+              </div>
+              <div class="meta-card">
+                <h4>Grid Settings</h4>
+                <p>Editing: {{ currentMeta()!.gridSettings.editing.mode }}</p>
+                <p>Selezione: {{ currentMeta()!.gridSettings.selection.mode }}</p>
+                <p>Pagina: {{ currentMeta()!.gridSettings.pageSize }}</p>
+                <p>Export: {{ currentMeta()!.gridSettings.export.enabled ? 'Si' : 'No' }}</p>
+              </div>
+              <div class="meta-card">
+                <h4>Form Settings</h4>
+                <p>Layout: {{ currentMeta()!.formSettings.mode }}</p>
+                <p>Colonne: {{ currentMeta()!.formSettings.colCount }}</p>
+                <p>Label: {{ currentMeta()!.formSettings.labelLocation }}</p>
+                <p>Nodi Radice: {{ currentMeta()!.formSettings.items?.length || 0 }}</p>
+              </div>
+            </div>
+
+            <h4 class="fields-title">Campi</h4>
+            <div class="fields-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Campo</th>
+                    <th>Caption</th>
+                    <th>Tipo</th>
+                    <th>Editor</th>
+                    <th>PK</th>
+                    <th>Required</th>
+                    <th>ReadOnly</th>
+                    <th>Lookup</th>
+                    <th>Picklist</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (f of currentMeta()!.fields; track f.dataField) {
+                    <tr>
+                      <td><code>{{ f.dataField }}</code></td>
+                      <td>{{ f.caption }}</td>
+                      <td>{{ f.dataType }}</td>
+                      <td><code>{{ f.control.editorType }}</code></td>
+                      <td>{{ f.isPrimaryKey ? '✓' : '' }}</td>
+                      <td>{{ f.control.required ? '✓' : '' }}</td>
+                      <td>{{ f.control.readOnly ? '✓' : '' }}</td>
+                      <td>{{ f.lookup?.name || '' }}</td>
+                      <td>{{ f.picklist?.name || '' }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          } @else {
+            <div class="form-hint">Carica un dataset per esplorare i metadati.</div>
+          }
+        </div>
+      </dxi-item>
+
+    </dx-tab-panel>
+  }
+
+  <!-- ═══ JSON Popup ═══ -->
+  <dx-popup
+    [(visible)]="showJson"
+    [title]="'Metadati JSON: ' + (currentMeta()?.datasetId || '')"
+    [width]="800"
+    [height]="600"
+    [showCloseButton]="true">
+    <dx-scroll-view>
+      <pre class="json-view">{{ metadataJson() }}</pre>
+    </dx-scroll-view>
+  </dx-popup>
+
+</div>

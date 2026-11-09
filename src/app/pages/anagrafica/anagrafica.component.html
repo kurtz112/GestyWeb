@@ -1,0 +1,28 @@
+<div class="gesty-container">
+  <div class="card-gesty shadow-sm">
+    <div class="profile-header">
+      <div class="avatar-circle">{{iniziali()}}</div>
+      <div class="profile-title">
+        <h2>{{nomeCompleto()}}</h2>
+        @if (codicePersonale()) {
+          <span>Codice Personale: #{{codicePersonale()}}</span>
+        }
+      </div>
+    </div>
+
+    <zz-form
+        #zzForm
+        [dataset]="datasetScheda"
+        [(formData)]="scheda"
+        [mode]="'view'"
+        [modal]="false">
+    </zz-form>
+
+    <zz-data-grid
+      #zzGrid
+      [dataset]="datasetInquadramenti"
+      [height]="460"
+      (beforeLoad)="setupFiltri($event)">
+    </zz-data-grid>
+  </div>
+</div>

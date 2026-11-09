@@ -1,0 +1,18 @@
+    <div class="gesty-container">
+      <div class="card-gesty shadow-sm">
+        <div class="grid-header">
+          <div class="title-group">
+            <i class="dx-icon-attach icon-leaf"></i>
+            <h3>Documenti e Allegati</h3>
+          </div>
+        </div>
+
+        <zz-data-grid
+         #zzGrid
+         [dataset]="dataset"
+         [height]="460"
+         downloadFileField="ID_OBJECT_FILE"
+         (downloadFile)="onDownloadFile($event)">
+        </zz-data-grid>
+      </div>
+    </div>

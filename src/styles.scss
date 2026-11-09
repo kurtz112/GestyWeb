@@ -1,0 +1,555 @@
+/* ==========================================================================
+   GESTYWEB - GLOBAL DESIGN SYSTEM (v25.2) - MENU FIX
+   ========================================================================== */
+
+/* --- 1. FONTS & RENDERING --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+* {
+  box-sizing: border-box;
+  /* Massima nitidezza dei font su ogni browser */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  letter-spacing: -0.015em;
+  /* Font più moderno e compatto */
+}
+
+/* --- 2. VARIABILI DI TEMA --- */
+:root {
+  /* TEMA CHIARO */
+  --gesty-bg: #F4F7F6;
+  --gesty-card: #FFFFFF;
+  --gesty-text: #1A1C1E;
+  --gesty-text-muted: #6B7280;
+  --gesty-border: #E5E7EB;
+  --gesty-primary: #2D5A27;
+  /* Verde Foresta */
+  --gesty-leaf: #76B041;
+  /* Verde Logo */
+  --gesty-accent: #DCECC8;
+  /* Verde chiarissimo selezione */
+  --gesty-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  --radius-lg: 16px;
+  --radius-md: 8px;
+
+  /* SPACING SYSTEM */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+}
+
+[data-theme='dark'] {
+  /* TEMA SCURO */
+  --gesty-bg: #0F1113;
+  --gesty-card: #1C1E20;
+  --gesty-text: #F3F4F6;
+  --gesty-text-muted: #9CA3AF;
+  --gesty-border: #2D3135;
+  --gesty-primary: #A4D086;
+  /* Verde brillante per contrasto */
+  --gesty-leaf: #76B041;
+  --gesty-accent: #2D4021;
+  --gesty-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* --- 3. STRUTTURA LAYOUT & TOOLBAR --- */
+body {
+  background-color: var(--gesty-bg);
+  color: var(--gesty-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Brand Logo (Header) */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  /* Spazio arioso icona-testo */
+  height: 100%;
+
+  img {
+    height: 28px !important;
+    width: 28px !important;
+    object-fit: contain;
+    margin-top: -1px;
+    /* Allineamento ottico perfetto */
+  }
+
+  .logo-text {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--gesty-primary) !important;
+    line-height: 1;
+    letter-spacing: -0.03em;
+
+    span {
+      color: var(--gesty-leaf);
+      font-weight: 800;
+    }
+  }
+}
+
+.gesty-container {
+  padding: 30px;
+  max-width: 1600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* --- 4. SIDEBAR & MENU (FIXED) --- */
+.sidebar {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 240px !important;
+  /* Ridotto da 280px a 240px */
+  height: 100% !important;
+  background-color: var(--gesty-card);
+  border-right: 1px solid var(--gesty-border);
+  overflow: hidden !important;
+}
+
+.sidebar-header {
+  padding: 20px 15px;
+  /* Leggermente più compatto */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--gesty-border);
+
+  .sidebar-logo {
+    width: 26px;
+    height: 26px;
+  }
+
+  .sidebar-brand {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gesty-primary);
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.sidebar-scrollable-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 0;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--gesty-border);
+    border-radius: 10px;
+  }
+}
+
+.sidebar-footer-menu {
+  margin-top: auto;
+  padding: 10px 0 20px 0;
+  border-top: 1px solid var(--gesty-border);
+  background-color: var(--gesty-card);
+}
+
+.sidebar .dx-list-item-content {
+  display: flex !important;
+  /* Override table-cell */
+  flex-direction: row !important;
+  align-items: center !important;
+  width: 100% !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+/* ⭐ MENU-ITEM FIXED - PUNTO CRITICO ⭐ */
+.menu-item {
+  display: flex;
+  align-items: center;
+  /* NON flex-direction: column! Rimane row */
+  gap: 12px;
+  /* Ridotto da 20px per essere compatto */
+  padding: 12px 18px;
+  border-radius: 10px;
+  margin: 4px 10px;
+  color: var(--gesty-text);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  /* ⭐ IMPORTANTE: Impedisce al testo di andare a capo */
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  i {
+    /* Forza l'icona in un quadrato fisso per allineare il testo a sinistra */
+    width: 24px;
+    height: 24px;
+    font-size: 1.25rem !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--gesty-text-muted);
+    flex-shrink: 0;
+    /* Impedisce all'icona di schiacciarsi */
+  }
+
+  span {
+    font-size: 0.92rem;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* ⭐ Impedisce a span di andare a capo */
+    flex: 1;
+    /* Permette a span di prendere spazio rimanente */
+  }
+
+  &:hover {
+    background-color: var(--gesty-bg);
+    color: var(--gesty-primary);
+
+    i {
+      color: var(--gesty-primary);
+    }
+  }
+
+  /* Stile specifico per i menu di servizio (Impostazioni, Logout, ecc) */
+  &.service {
+    gap: 12px;
+    font-size: 0.9rem;
+    color: var(--gesty-text-muted);
+
+    i {
+      font-size: 1.15rem !important;
+    }
+  }
+}
+
+/* --- 5. COMPONENTI UI (Cards, Badges, Notifiche) --- */
+.card-gesty,
+.filter-card,
+.main-card,
+.master-section,
+.detail-card,
+.piano-card {
+  background-color: var(--gesty-card) !important;
+  color: var(--gesty-text) !important;
+  border: 1px solid var(--gesty-border) !important;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--gesty-shadow);
+  padding: 24px;
+}
+
+/* Badge Stati con colori semantici e trasparenze */
+/* 
+  SEMANTIC COLORS:
+  - GREEN  (.attivo, .pagato, .active): Stato positivo/completato
+  - ORANGE (.in-attesa, .pending):      Stato in sospeso/da verificare
+  - BLUE   (.ferie):                     Assenza/Permesso
+*/
+.badge-status,
+.status-tag {
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  display: inline-block;
+
+  &.attivo,
+  &.pagato,
+  &.active {
+    background: rgba(118, 176, 65, 0.15);
+    color: var(--gesty-leaf);
+  }
+
+  &.in-attesa,
+  &.pending {
+    background: rgba(239, 108, 0, 0.15);
+    color: #ffb74d;
+  }
+
+  &.ferie {
+    background: rgba(25, 118, 210, 0.15);
+    color: #64b5f6;
+  }
+}
+
+/* Notifiche Reattive */
+.notifica-item {
+  display: flex;
+  gap: 20px;
+  /* Più spazio icona-testo */
+  padding: 20px;
+  border-bottom: 1px solid var(--gesty-border);
+
+  &.unread {
+    background: rgba(118, 176, 65, 0.06);
+    border-left: 4px solid var(--gesty-leaf);
+  }
+
+  .notifica-top strong {
+    color: var(--gesty-text);
+  }
+
+  .notifica-data {
+    color: var(--gesty-text-muted);
+    font-size: 0.75rem;
+  }
+
+  p {
+    color: var(--gesty-text-muted);
+    margin: 4px 0 0;
+  }
+}
+
+/* --- 6. DEVEXTREME OVERRIDES (Pixel-Perfect Fixes) --- */
+.dx-widget {
+  font-family: 'Inter', sans-serif !important;
+}
+
+.dx-button,
+.dx-textbox,
+.dx-selectbox,
+.dx-datagrid {
+  border-radius: var(--radius-md) !important;
+}
+
+.dx-datagrid-headers {
+  color: var(--gesty-primary) !important;
+  font-weight: 700 !important;
+  border-bottom: 2px solid var(--gesty-leaf) !important;
+  background: transparent !important;
+}
+
+.dx-selection-row {
+  background-color: var(--gesty-accent) !important;
+  color: var(--gesty-primary) !important;
+}
+
+/* Fix Icone DX sfocate */
+.dx-icon {
+  font-size: 1.2rem !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Override focus ring azzurro DevExtreme → colore tema (verde/arancione) */
+.dx-button.dx-state-focused {
+  outline: none !important;
+  box-shadow: 0 0 0 2px var(--gesty-leaf) !important;
+  border-color: var(--gesty-leaf) !important;
+}
+
+.dx-button.dx-state-focused .dx-button-content {
+  outline: none !important;
+}
+
+/* Rimuove anche il glow azzurro nativo del browser sui widget DX */
+.dx-widget *:focus {
+  outline: none !important;
+}
+
+.dx-widget.dx-state-focused {
+  box-shadow: 0 0 0 2px var(--gesty-leaf) !important;
+}
+
+/* Campi in sola lettura: il tema Generic (dx.light.css e dx.dark.css) li
+   disegna con il bordo tratteggiato, che con gli editor outlined di zNg
+   circonda ogni campo. Bordo pieno come in Agorà; l'etichetta flottante segue
+   il bordo. Le regole stanno sotto .dx-viewport (classe che DevExtreme mette
+   sul body) perche' il foglio del tema scelto dall'utente si carica dopo
+   questo: a parita' di selettore vincerebbe il tratteggio del tema. */
+.dx-viewport {
+  .dx-texteditor.dx-state-readonly,
+  .dx-htmleditor.dx-state-readonly,
+  .dx-htmleditor.dx-htmleditor-filled.dx-state-readonly {
+    border-style: solid;
+  }
+
+  .dx-texteditor.dx-state-readonly.dx-editor-underlined {
+    border-style: none none solid;
+  }
+
+  .dx-daterangebox .dx-texteditor.dx-state-readonly::before {
+    border-bottom-style: solid;
+  }
+
+  .dx-editor-outlined.dx-texteditor-with-floating-label.dx-state-readonly .dx-label,
+  .dx-editor-outlined.dx-texteditor-with-floating-label.dx-state-readonly .dx-label-before,
+  .dx-editor-outlined.dx-texteditor-with-floating-label.dx-state-readonly .dx-label-after,
+  .dx-editor-outlined.dx-texteditor-with-label.dx-state-readonly .dx-label,
+  .dx-editor-outlined.dx-texteditor-with-label.dx-state-readonly .dx-label-before,
+  .dx-editor-outlined.dx-texteditor-with-label.dx-state-readonly .dx-label-after {
+    border-style: solid;
+  }
+}
+
+/* --- 7. UTILITY & TITOLI --- */
+h2,
+h3,
+h4,
+.section-title {
+  color: var(--gesty-text) !important;
+  margin-top: 0;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  /* Spazio tra icona h3 e testo */
+}
+
+label,
+.stat-label,
+.piano-meta {
+  color: var(--gesty-text-muted) !important;
+  font-weight: 600;
+}
+
+.icon-leaf {
+  color: var(--gesty-leaf) !important;
+}
+
+/* Forza sfondo sidebar in Dark Mode (DX Drawer Fix) */
+[data-theme='dark'] .dx-drawer-panel-content,
+[data-theme='dark'] .sidebar {
+  background-color: var(--gesty-card) !important;
+}
+
+/* --- 8. RESPONSIVE --- */
+/* TABLET (768px e sotto) */
+@media (max-width: 768px) {
+  .gesty-container {
+    padding: 15px;
+  }
+
+  .logo-text {
+    display: none;
+  }
+
+  .brand {
+    gap: 0;
+  }
+
+  .sidebar {
+    width: 220px;
+  }
+
+  .menu-item {
+    padding: 10px 12px;
+    gap: 12px;
+
+    span {
+      font-size: 0.85rem;
+    }
+  }
+}
+
+/* MOBILE (600px e sotto) */
+@media (max-width: 600px) {
+  .gesty-container {
+    padding: 12px;
+    gap: 16px;
+  }
+
+  .sidebar {
+    width: 200px;
+  }
+
+  .card-gesty,
+  .filter-card,
+  .main-card,
+  .master-section,
+  .detail-card,
+  .piano-card {
+    padding: 16px;
+  }
+
+  .menu-item {
+    padding: 8px 10px;
+    gap: 10px;
+    margin: 2px 5px;
+
+    i {
+      width: 20px;
+      height: 20px;
+      font-size: 1rem !important;
+    }
+
+    span {
+      font-size: 0.8rem;
+    }
+
+    &.service {
+      font-size: 0.75rem;
+    }
+  }
+
+  h2,
+  h3,
+  h4,
+  .section-title {
+    gap: 8px;
+  }
+
+  .notifica-item {
+    gap: 12px;
+    padding: 12px;
+  }
+}
+
+/* SMALL MOBILE (480px e sotto) */
+@media (max-width: 480px) {
+  .sidebar {
+    width: 180px;
+  }
+
+  .card-gesty,
+  .filter-card,
+  .main-card,
+  .master-section,
+  .detail-card,
+  .piano-card {
+    padding: 12px;
+    border-radius: 8px;
+  }
+
+  .badge-status,
+  .status-tag {
+    padding: 4px 10px;
+    font-size: 0.7rem;
+  }
+
+  .sidebar-header {
+    padding: 12px 10px;
+
+    .sidebar-logo {
+      width: 20px;
+      height: 20px;
+    }
+
+    .sidebar-brand {
+      font-size: 0.95rem;
+    }
+  }
+}

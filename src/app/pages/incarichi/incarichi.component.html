@@ -1,0 +1,75 @@
+    <div class="gesty-container">
+
+      <!-- 1. RIEPILOGO DEGLI INCARICHI IN CORSO -->
+      <div class="stats-ribbon">
+        <div class="stat-card">
+          <span class="stat-label">Incarichi in corso</span>
+          <span class="stat-value">{{ riepilogo() ? riepilogo()!.inCorso : '—' }}</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Ore attribuite</span>
+          <span class="stat-value">{{ riepilogo() ? (riepilogo()!.oreAttribuite | number:'1.0-2') : '—' }}</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Ore rilevate</span>
+          <span class="stat-value">{{ riepilogo() ? (riepilogo()!.oreRilevate | number:'1.0-2') : '—' }}</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Ore residue</span>
+          <span class="stat-value">{{ riepilogo() ? (riepilogo()!.oreResidue | number:'1.0-2') : '—' }}</span>
+        </div>
+      </div>
+
+      <!-- 2. ELENCO DEGLI INCARICHI -->
+      <div class="master-section shadow-sm">
+        <div class="section-header">
+          <h3><img src="leaf.svg" alt="" style="width:20px"> Elenco Incarichi Personale</h3>
+        </div>
+
+        <zz-data-grid
+          #zzGrid
+          [dataset]="datasetIncarichi"
+          [height]="460"
+          (focusedRowChanged)="onIncaricoCambiato($event)">
+        </zz-data-grid>
+      </div>
+
+      <!-- 3. PIANI PERSONALIZZATI E SERVIZI DELL'INCARICO SCELTO -->
+      @if (incaricoConPiani()) {
+        <div class="detail-drilldown">
+          <div class="detail-intro">
+            <span>PIANI PERSONALIZZATI PER:</span>
+            <strong>{{ titoloIncarico }}</strong>
+          </div>
+
+          <div class="piano-card shadow-sm">
+            <div class="servizi-wrapper">
+              <label class="label-servizi">Piani personalizzati dell'incarico</label>
+              <zz-data-grid
+                #gridPiani
+                [dataset]="datasetPiani"
+                [height]="300"
+                (beforeLoad)="onPrimaCaricaPiani($event)"
+                (focusedRowChanged)="onPianoCambiato($event)">
+              </zz-data-grid>
+            </div>
+          </div>
+
+          @if (pianoScelto()) {
+            <div class="piano-card shadow-sm">
+              <div class="servizi-wrapper">
+                <label class="label-servizi">
+                  Servizi del piano di {{ pianoScelto()!['NOMINATIVO_STUDENTE'] }}
+                </label>
+                <zz-data-grid
+                  #gridServizi
+                  [dataset]="datasetServizi"
+                  [height]="260"
+                  (beforeLoad)="onPrimaCaricaServizi($event)">
+                </zz-data-grid>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>

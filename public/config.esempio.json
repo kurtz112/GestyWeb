@@ -1,0 +1,4 @@
+{
+  "_nota": "Copiare in config.json, nella stessa cartella di index.html, e correggere il valore per questa installazione. Se la voce manca prende il valore compilato nel programma. Gli aggiornamenti non toccano config.json. Niente password o chiavi riservate: il file arriva al browser di chiunque apra il sito.",
+  "apiUrl": "http://nome-server:8444/api"
+}

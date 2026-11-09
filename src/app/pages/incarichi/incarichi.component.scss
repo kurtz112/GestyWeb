@@ -1,0 +1,212 @@
+    .gesty-container {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* 1. Card Filtri */
+    .filter-card {
+      background: var(--gesty-card);
+      color: var(--gesty-text);
+      padding: 20px;
+      border-radius: 12px;
+      border-top: 4px solid var(--gesty-leaf);
+      border-bottom: 1px solid var(--gesty-border);
+      border-left: 1px solid var(--gesty-border);
+      border-right: 1px solid var(--gesty-border);
+    }
+
+    .filter-row {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .filter-field {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .filter-field label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--gesty-text-muted);
+      text-transform: uppercase;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    /* 2. Sezione Master (Incarichi) */
+    .master-section {
+      background: var(--gesty-card);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--gesty-border);
+    }
+
+    .section-header {
+      padding: 15px 20px;
+      background: var(--gesty-bg);
+      border-bottom: 1px solid var(--gesty-border);
+    }
+
+    .section-header h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: var(--gesty-primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Badge per lo stato dell'incarico */
+    .status-badge {
+      background: rgba(118, 176, 65, 0.15);
+      color: var(--gesty-leaf);
+      padding: 4px 12px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    /* 3. Drilldown (Piani e Servizi) */
+    .detail-drilldown {
+      animation: fadeIn 0.5s ease;
+      margin-top: 10px;
+    }
+
+    .detail-intro {
+      margin: 10px 0 20px 5px;
+    }
+
+    .detail-intro span {
+      font-size: 0.8rem;
+      color: var(--gesty-text-muted);
+      display: block;
+    }
+
+    .detail-intro strong {
+      font-size: 1.2rem;
+      color: var(--gesty-primary);
+    }
+
+    /* Piano Card (Livello 2) */
+    .piano-card {
+      background: var(--gesty-card);
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border: 1px solid var(--gesty-border);
+      box-shadow: var(--gesty-shadow);
+    }
+
+    .piano-header {
+      padding: 15px 20px;
+      background: var(--gesty-bg);
+      border-bottom: 1px solid var(--gesty-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 12px 12px 0 0;
+    }
+
+    .piano-name {
+      font-weight: 700;
+      color: var(--gesty-text);
+      font-size: 1rem;
+    }
+
+    .piano-meta {
+      font-size: 0.75rem;
+      color: var(--gesty-text-muted);
+    }
+
+    .icon-leaf {
+      color: var(--gesty-leaf);
+      margin-right: 10px;
+    }
+
+    /* Servizi (Livello 3) */
+    .servizi-wrapper {
+      padding: 20px;
+    }
+
+    .label-servizi {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gesty-leaf);
+      margin-bottom: 12px;
+      display: block;
+      text-transform: uppercase;
+    }
+
+    /* Forza il tema scuro sulla griglia servizi interna */
+    .grid-servizi {
+      border-radius: 8px;
+      overflow: hidden;
+      background-color: transparent !important;
+    }
+
+    .empty-detail {
+      padding: 40px;
+      text-align: center;
+      color: var(--gesty-text-muted);
+      background: var(--gesty-card);
+      border-radius: 12px;
+      border: 1px dashed var(--gesty-border);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .filter-row {
+        gap: 15px;
+      }
+
+      .piano-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+      }
+    }
+
+    /* Riepilogo degli incarichi in corso, calcolato dai dati */
+    .stats-ribbon {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .stat-card {
+      flex: 1;
+      min-width: 160px;
+      background: var(--gesty-card);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: var(--gesty-shadow);
+      border: 1px solid var(--gesty-border);
+      text-align: center;
+    }
+
+    .stat-label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--gesty-text-muted);
+      margin-bottom: 5px;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--gesty-primary);
+    }
